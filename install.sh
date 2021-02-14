@@ -19,20 +19,36 @@ cat mirrorlist_spain mirrorlist_france mirrorlist_germany > /etc/pacman.d/mirror
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 
 # disk (mbr) ------------------------------------------------------------------------
-echo "==> Preparing disk for insmtallation (mbr)..."
+echo "==> Preparing disk for installation (mbr)..."
 
-echo -n "Enter disk name (/dev/sda, /dev/nvme0n1 ...): "
+echo -n "Enter disk name (/dev/sda, /dev/nvme0n1): "
 read DISK
 
-echo "formating ${DISK}1 as linux swap"
-mkswap "${DISK}1"
-swapon "${DISK}1"
+if [[ $DISK = *nvme* ]]
+then
+    echo "formating ${DISK}p1 as fat32"
+    mkfs.fat -F32 "${DISK}p1"
 
-echo "formating ${DISK}2 as ext4"
-mkfs.ext4 "${DISK}2"
+    echo "formating ${DISK}p2 as linux swap"
+    mkswap "${DISK}p2"
+    swapon "${DISK}p2"
 
-echo "mounting ${DISK}2 at /mnt"
-mount "${DISK}2" /mnt
+    echo "formating ${DISK}p3 as ext4"
+    mkfs.ext4 "${DISK}p3"
+
+    echo "mounting ${DISK}p3 at /mnt"
+    mount "${DISK}p3" /mnt
+else
+    echo "formating ${DISK}1 as linux swap"
+    mkswap "${DISK}1"
+    swapon "${DISK}1"
+
+    echo "formating ${DISK}2 as ext4"
+    mkfs.ext4 "${DISK}2"
+
+    echo "mounting ${DISK}2 at /mnt"
+    mount "${DISK}2" /mnt
+fi
 
 
 # Arch Linux installation -------------------------------------------------------------
@@ -43,9 +59,10 @@ echo "generating fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
 
 
-# Arch-chroot at /mnt
+# Arch-chroot at /mnt -----------------------------------------------------------------
 curl -o /mnt/install.sh https://raw.githubusercontent.com/josemapt/archpt/main/0-install.sh
 chmod +x /mnt/install.sh
+sed -i "s/^DISK=/DISK=${DISK}/" /mnt/install.sh
 
 echo "Arch-chroot at /mnt"
 arch-chroot /mnt

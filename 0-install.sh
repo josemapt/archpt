@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DISK= # this is added when runing the fisrt script
+
 # Initial config ----------------------------------------------------------------------
 echo "==> Setting zoneinfo..."
 ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime
@@ -16,9 +18,35 @@ echo "KEYMAP=es" > /etc/vconsole.conf
 
 # Bootloader installation --------------------------------------------------------------
 echo "==> Installing bootloader..."
-pacman -S --noconfirm grub
-grub-install --target=i386-pc /dev/vda # this shound be changed
-grub-mkconfig -o /boot/grub/grub.cfg
+
+if [[ $DISK = *nvme* ]]
+then
+    mkdir /boot/efi
+    mount $DISK /boot/efi
+    
+    bootctl install --path=/boot/efi
+    cat <<EOF > /boot/efi/loader/entries/loader.conf
+    default arch.conf
+    timeout 0
+    console-mode max
+    editor no
+    EOF
+
+    cat <<EOF > /boot/efi/loader/entries/arch.conf
+    title Arch Linux  
+    linux /vmlinuz-linux  
+    initrd  /intel-ucode.img
+    initrd  /initramfs-linux.img  
+    options root=${DISK}p3 rw quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0
+    EOF
+
+    umount -R /boot/efi
+
+else
+    pacman -S --noconfirm grub
+    grub-install --target=i386-pc $DISK
+    grub-mkconfig -o /boot/grub/grub.cfg
+fi
 
 
 # Network configuration -----------------------------------------------------------------
