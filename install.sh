@@ -15,7 +15,7 @@ curl -s -o mirrorlist_spain https://archlinux.org/mirrorlist/?country=ES&protoco
 curl -s -o mirrorlist_germany https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4
 curl -s -o mirrorlist_france https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4
 
-sleep 0.2
+echo -n ""
 
 cat mirrorlist_spain mirrorlist_france mirrorlist_germany > /etc/pacman.d/mirrorlist
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
