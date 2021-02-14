@@ -62,7 +62,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # Arch-chroot at /mnt -----------------------------------------------------------------
 curl -o /mnt/install.sh https://raw.githubusercontent.com/josemapt/archpt/main/0-install.sh
 chmod +x /mnt/install.sh
-sed -i "s/DISK=/DISK=${DISK}/" /mnt/install.sh
+sed -i "s/DISK=/DISK=\${DISK}/" /mnt/install.sh
 
 echo "Arch-chroot at /mnt"
 arch-chroot /mnt
