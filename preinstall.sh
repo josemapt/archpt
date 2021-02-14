@@ -10,23 +10,48 @@ else
     exit -1
 fi
 
-echo "==> Mounting /dev/nvme0n1p3 at /mnt..."
+echo "==> Refreshing mirrorlist..."
+timedatectl set-ntp true
+reflector --latest 200 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist &
+
+# disk (mbr) ------------------------------------------------------------------------
+echo "==> Preparing disk for installation (mbr)..."
+
+echo -n "Enter disk name (/dev/sda, /dev/nvme0n1 ...): "
+read DISK
+
+echo "formating ${DISK}1 as linux swap"
+mkswap "${DISK}1"
+swapon "${DISK}1"
+
+echo "formating ${DISK}2 as ext4"
+mkfs.ext4 "${DISK}2"
+
+echo "mounting ${DISK}2 at /mnt"
 mount /dev/nvme0n1p3 /mnt
-echo "done"
 
-echo "==> Installing base pakages..."
-pacstrap /mnt base base-devel linux linux-firmware
-echo "done"
 
-echo "==> Generating fstab..."
+# Arch Linux installation -------------------------------------------------------------
+echo "==> Installing linux..."
+pacstrap /mnt base base-devel linux linux-firmware intel-ucode
+
+echo "generating fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
-echo "done"
 
-echo "==> Downloading install script"
-curl -O https://raw.githubusercontent.com/josemapt/archpt/main/install.sh
-chmod +x install.sh
-cp install.sh /mnt
-echo "done"
-
-echo "==> Arch-chroot at /mnt"
+echo "Arch-chroot at /mnt"
 arch-chroot /mnt
+
+
+# Bootloader installation --------------------------------------------------------------
+echo "==> Installing bootloader..."
+mkdir /boot/efi/
+mount "${DISK}1" /boot/
+
+bootctl install
+cat <<EOF > /boot/loader/entries/arch.conf
+title Arch Linux  
+linux /vmlinuz-linux  
+initrd  /intel-ucode.img
+initrd  /initramfs-linux.img  
+options root=${DISK}2 rw
+EOF
