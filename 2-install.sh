@@ -1,53 +1,5 @@
 #!/bin/bash
 
-echo "==> Checking network connection..."
-if ping -c 1 google.com >/dev/null
-then
-    echo "done"
-else
-    echo "Network not found"
-    echo "Please connect to Internet before running this script"
-    exit -1
-fi
-
-echo "==> Refreshing mirrorlist (spain)..."
-#timedatectl set-ntp true
-curl -s -o mirrorlist_spain https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4
-curl -s -o mirrorlist_germany https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4
-curl -s -o mirrorlist_france https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4
-
-cat mirrorlist_spain mirrorlist_france mirrorlist_germany > /etc/pacman.d/mirrorlist
-sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
-pacman -Sy
-
-# disk (mbr) ------------------------------------------------------------------------
-echo "==> Preparing disk for insmtallation (mbr)..."
-
-echo -n "Enter disk name (/dev/sda, /dev/nvme0n1 ...): "
-read DISK
-
-echo "formating ${DISK}1 as linux swap"
-mkswap "${DISK}1"
-swapon "${DISK}1"
-
-echo "formating ${DISK}2 as ext4"
-mkfs.ext4 "${DISK}2"
-
-echo "mounting ${DISK}2 at /mnt"
-mount "${DISK}2" /mnt
-
-
-# Arch Linux installation -------------------------------------------------------------
-echo "==> Installing linux..."
-pacstrap /mnt base base-devel linux linux-firmware intel-ucode
-
-echo "generating fstab"
-genfstab -U /mnt >> /mnt/etc/fstab
-
-echo "Arch-chroot at /mnt"
-arch-chroot /mnt
-
-
 # Initial config ----------------------------------------------------------------------
 echo "==> Setting zoneinfo..."
 ln -sf /usr/share/zoneinfo/Europe/Madrid /etc/localtime
@@ -65,7 +17,7 @@ echo "KEYMAP=es" > /etc/vconsole.conf
 # Bootloader installation --------------------------------------------------------------
 echo "==> Installing bootloader..."
 pacman -S grub dosfstools mtools
-grub-install --target=i386-pc ${DISK}2
+grub-install --target=i386-pc ${DISK}
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
