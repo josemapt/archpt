@@ -73,7 +73,7 @@ sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /et
 # Finish installation --------------------------------------------------------------------
 echo "==> Downloading last pakages and cloning repo"
 pacman -S --noconfirm git
-git clone https://github.com/josemapt/archpt.git /home/${USERNAME}/
+git clone https://github.com/josemapt/archpt.git /home/${USERNAME}/archpt
 
 
 echo "==> Installation finished. System ready for first boot. Shutting down machine..."

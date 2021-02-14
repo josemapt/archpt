@@ -23,7 +23,6 @@ else
 fi
 
 echo "==> Refreshing mirrorlist (spain)..."
-#timedatectl set-ntp true
 curl -s -o mirrorlist_spain https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4
 curl -s -o mirrorlist_germany https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4
 curl -s -o mirrorlist_france https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4

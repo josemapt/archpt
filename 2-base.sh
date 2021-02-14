@@ -5,7 +5,7 @@ PKGS=(
 
     # --- drivers and utils
         'xf86-video-intel'
-        'nvidea'
+        'nvidia'
         'neovim'
         'unzip'
         'fish'

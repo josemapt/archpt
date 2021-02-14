@@ -10,7 +10,7 @@ echo "==> Installing aur pakages..."
 PKGS=(
 
     # --- programs
-        'brabe-bin'
+        'brave-bin'
         'vscodium-bin'
     
     # --- themes and fonts
