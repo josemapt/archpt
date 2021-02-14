@@ -18,7 +18,6 @@ curl -s -o mirrorlist_france https://archlinux.org/mirrorlist/?country=FR&protoc
 
 cat mirrorlist_spain mirrorlist_france mirrorlist_germany > /etc/pacman.d/mirrorlist
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
-pacman
 
 # disk (mbr) ------------------------------------------------------------------------
 echo "==> Preparing disk for insmtallation (mbr)..."
