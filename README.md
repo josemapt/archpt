@@ -14,5 +14,6 @@ Then run:
 This script will install linux and chroot into it. Then run again <b>./install.sh</b> and wait.
 
 After rebooting you'll see that the home directory is not empty. Then cd into archpt and run:
+
     make
     ./archpt.sh
