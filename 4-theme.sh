@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Some gnome settings -------------------------------------------
-
-
-
-
 # theme ---------------------------------------------------------
 echo "==> Starting theme configuration..."
 
@@ -23,3 +18,8 @@ echo "changing gtk theme"
 tar -xf assets/Matcha-sea.tar.gz
 sudo mv usr/share/themes/Matcha-* /usr/share/themes/
 gsettings set org.gnome.desktop.interface gtk-theme 'Matcha-sea'
+
+echo "changing background image"
+sudo mkdir /usr/share/backgrounds
+sudo mv assets/wall1.jpg /usr/share/backgrounds
+gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/wall1.jpg'
