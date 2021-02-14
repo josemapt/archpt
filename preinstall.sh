@@ -27,14 +27,14 @@ echo -n "Enter disk name (/dev/sda, /dev/nvme0n1 ...): "
 read DISK
 
 echo "formating ${DISK}1 as linux swap"
-mkswap ${DISK}1
-swapon ${DISK}1
+mkswap "${DISK}1"
+swapon "${DISK}1"
 
 echo "formating ${DISK}2 as ext4"
-mkfs.ext4 ${DISK}2
+mkfs.ext4 "${DISK}2"
 
 echo "mounting ${DISK}2 at /mnt"
-mount ${DISK}2 /mnt
+mount "${DISK}2" /mnt
 
 
 # Arch Linux installation -------------------------------------------------------------
