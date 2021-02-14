@@ -16,9 +16,15 @@ PKGS=(
     # --- themes and fonts
         'yaru-sound-theme'
         'nerd-fonts-source-code-pro'
+    
+    # --- plymouth
+        'plymouth'
+        'gdm-plymouth'
 )
 
 for PKG in "${PKGS[@]}"; do
     echo "INSTALLING: ${PKG}"
     paru -S --noconfirm "$PKG"
 done
+
+sudo systemctl enable gdm

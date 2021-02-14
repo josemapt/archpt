@@ -18,7 +18,7 @@ PKGS=(
         'gnome-terminal'
         'gnome-control-center'
         'gnome-tweaks'
-        'gdm'
+        #'gdm'
 
     # --- programs
         'nautilus'
@@ -35,8 +35,3 @@ for PKG in "${PKGS[@]}"; do
     echo "INSTALLING: ${PKG}"
     sudo pacman -S "$PKG" --noconfirm --needed
 done
-
-# some gnome settings -------------------------------------------
-sudo systemctl enable gdm
-
-gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'es')]"
