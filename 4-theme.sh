@@ -34,10 +34,10 @@ gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'org.gnom
 echo "changing plymouth theme"
 sudo plymouth-set-default-theme -R custom
 
-sudo mount /dev/nvme0n1p1 /boot/efi/;
-sudo cp -f /boot/i* /boot/efi/;
-sudo cp -f /boot/vmlinuz-linux /boot/efi/;
-sudo sudo umount -R /boot/efi;
+#sudo mount /dev/nvme0n1p1 /boot/efi/;
+#sudo cp -f /boot/i* /boot/efi/;
+#sudo cp -f /boot/vmlinuz-linux /boot/efi/;
+#sudo sudo umount -R /boot/efi;
 
 
 echo "changing default shell"
