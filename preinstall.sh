@@ -24,6 +24,7 @@ echo "done"
 
 echo "==> Downloading install script"
 curl -O https://raw.githubusercontent.com/josemapt/archpt/main/install.sh
+chmod +x install.sh
 cp install.sh /mnt
 echo "done"
 
