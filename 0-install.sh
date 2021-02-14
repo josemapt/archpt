@@ -1,6 +1,7 @@
 #!/bin/bash
 
-DISK= # this is added when runing the fisrt script
+# this is added when runing the fisrt script
+DISK=
 
 # Initial config ----------------------------------------------------------------------
 echo "==> Setting zoneinfo..."
