@@ -39,19 +39,11 @@ then
     echo "mounting ${DISK}p3 at /mnt"
     mount "${DISK}p3" /mnt
 else
-    echo "creating partiton ${DISK}1 as linux swap"
-    sgdisk -n 1:0:+1024M ${DISK}
-    sgdisk -t 1:ef00 ${DISK}
-    mkswap "${DISK}1"
-    swapon "${DISK}1"
+    parted ${DISK} mklabel msdos
+    parted ${DISK} mkpart primary ext4 1MiB 100%
 
-    echo "creating partiton ${DISK}2 as ext4"
-    sgdisk -n 2:0:0 ${DISK}
-    sgdisk -t 2:8300 ${DISK}
-    mkfs.ext4 "${DISK}2"
-
-    echo "mounting ${DISK}2 at /mnt"
-    mount "${DISK}2" /mnt
+    echo "mounting ${DISK}1 at /mnt"
+    mount "${DISK}1" /mnt
 fi
 
 
