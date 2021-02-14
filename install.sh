@@ -7,12 +7,12 @@ locale-gen
 echo "done"
 
 echo "==> Creating vconsole..."
-KEYMAP=es
+echo "KEYMAP=es" > /etc/vconsole.conf
 echo "done"
 
 echo "==> Setting hosts..."
 echo "jm-arch" > /etc/hostname
-echo "\n127.0.0.1	localhost\n::1		localhost\n127.0.1.1	jm-arch.localdomain	jm-arch" >> /etc/hostname
+echo -e "\n127.0.0.1	localhost\n::1		localhost\n127.0.1.1	jm-arch.localdomain	jm-arch" >> /etc/hosts
 echo "done"
 
 echo "==> Setting root password..."

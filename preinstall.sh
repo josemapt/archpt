@@ -22,5 +22,10 @@ echo "==> Generating fstab..."
 genfstab -U /mnt >> /mnt/etc/fstab
 echo "done"
 
+echo "==> Downloading install script"
+curl -O https://raw.githubusercontent.com/josemapt/archpt/main/install.sh
+cp install.sh /mnt
+echo "done"
+
 echo "==> Arch-chroot at /mnt"
 arch-chroot /mnt
