@@ -10,9 +10,13 @@ else
     exit -1
 fi
 
-echo "==> Refreshing mirrorlist..."
+echo "==> Refreshing mirrorlist (spain)..."
 #timedatectl set-ntp true
-reflector --latest 200 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+curl -o mirrorlist_spain https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4
+curl -o mirrorlist_germany https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4
+curl -o mirrorlist_france https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4
+
+cat mirrorlist_spain mirrorlist_france mirrorlist_germany > /etc/pacman.d/mirrorlist
 
 # disk (mbr) ------------------------------------------------------------------------
 echo "==> Preparing disk for installation (mbr)..."
