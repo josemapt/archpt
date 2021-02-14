@@ -5,13 +5,13 @@ echo "changing keymap"
 gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'es')]"
 
 echo "changing cursor theme"
-tar -xf asetts/165371-Breeze.tar.gz
+tar -xf assets/165371-Breeze.tar.gz
 sudo mv Breeze/ /usr/share/icons/
 gsettings set org.gnome.desktop.interface cursor-theme 'Breeze'
 sudo sed -i 's/Adwaita/Breeze/' /usr/share/icons/default/index.theme
 
 echo "changing icon theme"
-tar -xf asetts/papirus-icon-theme.tar.zst
+tar -xf assets/papirus-icon-theme.tar.zst
 sudo mv usr/share/icons/Pa* /usr/share/icons/
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus'
 
@@ -32,6 +32,7 @@ echo "adding icons to sidepanel"
 gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'VSCodium.desktop']"
 
 echo "changing plymouth theme"
+sudo mv plymouth/custom /usr/share/plymouth/themes
 sudo plymouth-set-default-theme -R custom
 
 #sudo mount /dev/nvme0n1p1 /boot/efi/;
