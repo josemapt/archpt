@@ -11,7 +11,6 @@ else
 fi
 
 echo "==> Refreshing mirrorlist (spain)..."
-#timedatectl set-ntp true
 curl -s -o mirrorlist_spain https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4
 curl -s -o mirrorlist_germany https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4
 curl -s -o mirrorlist_france https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4
@@ -45,7 +44,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 
 # Arch-chroot at /mnt
-curl -o /mnt/install.sh https://raw.githubusercontent.com/josemapt/archpt/main/2-install.sh
+curl -o /mnt/install.sh https://raw.githubusercontent.com/josemapt/archpt/main/0-install.sh
 chmod +x /mnt/install.sh
 
 echo "Arch-chroot at /mnt"

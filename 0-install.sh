@@ -17,7 +17,7 @@ echo "KEYMAP=es" > /etc/vconsole.conf
 # Bootloader installation --------------------------------------------------------------
 echo "==> Installing bootloader..."
 pacman -S --noconfirm grub
-grub-install --target=i386-pc ${DISK}
+grub-install --target=i386-pc /dev/vda # this shound be changed
 grub-mkconfig -o /boot/grub/grub.cfg
 
 
@@ -51,5 +51,10 @@ usermod -aG wheel,audio,video,optical,storage $USERNAME
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
 
 
-# Finish installation
+# Finish installation --------------------------------------------------------------------
+echo "==> Downloading last pakages and cloning repo"
+pacman -S --noconfirm git
+git clone https://github.com/josemapt/archpt.git
+
+
 echo "==> Installation finished. System ready for first boot. Shutting down machine..."
