@@ -41,11 +41,13 @@ then
 else
     echo "creating partiton ${DISK}1 as linux swap"
     sgdisk -n 1:0:+1024M ${DISK}
+    sgdisk -t 1:ef00 ${DISK}
     mkswap "${DISK}1"
     swapon "${DISK}1"
 
     echo "creating partiton ${DISK}2 as ext4"
     sgdisk -n 2:0:0 ${DISK}
+    sgdisk -t 2:8300 ${DISK}
     mkfs.ext4 "${DISK}2"
 
     echo "mounting ${DISK}2 at /mnt"
