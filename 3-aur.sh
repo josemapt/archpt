@@ -1,8 +1,7 @@
-#!/bin/bash
 
 echo "==> Installing paru aur helper..."
 git clone "https://aur.archlinux.org/paru-bin.git"
-cd paru-bin && makepkg -sic
+cd paru-bin && makepkg --noconfirm -sic
 cd ..
 rm -rf paru-bin
 

@@ -1,4 +1,3 @@
-#!/bin/bash
 
 echo "==> Installing Base System..."
 
@@ -35,6 +34,6 @@ for PKG in "${PKGS[@]}"; do
 done
 
 # some gnome settings -------------------------------------------
-systemctl enable gdm
+sudo systemctl enable gdm
 
 gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'es')]"
