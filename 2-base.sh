@@ -9,6 +9,9 @@ PKGS=(
         'neovim'
         'unzip'
         'fish'
+        'fd'
+        'ripgrep'
+        'sd'
 
     # --- desktop enviroment
         'gnome-shell'

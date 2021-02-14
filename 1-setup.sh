@@ -28,10 +28,13 @@ curl -s -o mirrorlist_spain https://archlinux.org/mirrorlist/?country=ES&protoco
 curl -s -o mirrorlist_germany https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4
 curl -s -o mirrorlist_france https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4
 
-cat mirrorlist_spain mirrorlist_france mirrorlist_germany > /etc/pacman.d/mirrorlist
-sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
+sudo cat mirrorlist_spain mirrorlist_france mirrorlist_germany > /etc/pacman.d/mirrorlist
+sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 
 rm mirrorlist_*
+
+echo "adding color to pacman"
+sudo sed -i 's/#Color/Color/' /etc/pacman.conf
 
 # makepkg config ----------------------------------------------------------------------
 echo "==> Configuring makepkg..."
