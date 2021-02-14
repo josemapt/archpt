@@ -41,8 +41,10 @@ then
     echo "mounting ${DISK}p3 at /mnt"
     mount "${DISK}p3" /mnt
 else
+    echo "creating partition ${DISK}1 as ext4"
     parted ${DISK} mklabel msdos
-    parted ${DISK} mkpart primary ext4 1MiB 100%
+    parted ${DISK} mkpart primary 1MiB 100%
+    mkfs.ext4 ${DISK}1
 
     echo "mounting ${DISK}1 at /mnt"
     mount "${DISK}1" /mnt
