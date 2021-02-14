@@ -31,6 +31,7 @@ curl -s -o mirrorlist_france https://archlinux.org/mirrorlist/?country=FR&protoc
 cat mirrorlist_spain mirrorlist_france mirrorlist_germany > /etc/pacman.d/mirrorlist
 sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 
+rm mirrorlist_*
 
 # makepkg config ----------------------------------------------------------------------
 echo "==> Configuring makepkg..."
