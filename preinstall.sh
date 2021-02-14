@@ -11,8 +11,8 @@ else
 fi
 
 echo "==> Refreshing mirrorlist..."
-timedatectl set-ntp true
-reflector --latest 200 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist &
+#timedatectl set-ntp true
+reflector --latest 200 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
 # disk (mbr) ------------------------------------------------------------------------
 echo "==> Preparing disk for installation (mbr)..."
@@ -28,7 +28,7 @@ echo "formating ${DISK}2 as ext4"
 mkfs.ext4 "${DISK}2"
 
 echo "mounting ${DISK}2 at /mnt"
-mount /dev/nvme0n1p3 /mnt
+mount "/dev/${DISK}2" /mnt
 
 
 # Arch Linux installation -------------------------------------------------------------
