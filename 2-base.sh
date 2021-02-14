@@ -37,4 +37,4 @@ done
 # some gnome settings -------------------------------------------
 systemctl enable gdm
 
-gsettings set org.gnome.desktop.input-sources sources '[('xkb', 'es')]'
+gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'es')]"

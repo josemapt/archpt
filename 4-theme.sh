@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# theme ---------------------------------------------------------
 echo "==> Starting theme configuration..."
 
 echo "changing cursor theme"
@@ -23,3 +22,9 @@ echo "changing background image"
 sudo mkdir /usr/share/backgrounds
 sudo mv assets/wall1.jpg /usr/share/backgrounds
 gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/wall1.jpg'
+
+echo "changing sound theme"
+gsettings set org.gnome.desktop.sound theme-name 'Yaru'
+
+echo "Adding icons to sidepanel"
+gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'VSCodium.desktop']"
