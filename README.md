@@ -5,6 +5,7 @@ Script for arch linux installation
 This script needs network connection and the disk must be partitioned.
 
 Then run:
+
     curl -O https://raw.githubusercontent.com/josemapt/archpt/main/install.sh
 
     chmod +x install.sh
