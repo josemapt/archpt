@@ -34,7 +34,7 @@ echo "formating ${DISK}2 as ext4"
 mkfs.ext4 ${DISK}2
 
 echo "mounting ${DISK}2 at /mnt"
-mount /dev/${DISK}2 /mnt
+mount ${DISK}2 /mnt
 
 
 # Arch Linux installation -------------------------------------------------------------
