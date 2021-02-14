@@ -44,5 +44,10 @@ pacstrap /mnt base base-devel linux linux-firmware intel-ucode
 echo "generating fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
 
+
+# Arch-chroot at /mnt
+curl -o /mnt/install.sh https://raw.githubusercontent.com/josemapt/archpt/main/2-install.sh
+chmod +x /mnt/install.sh
+
 echo "Arch-chroot at /mnt"
 arch-chroot /mnt
