@@ -39,11 +39,13 @@ then
     echo "mounting ${DISK}p3 at /mnt"
     mount "${DISK}p3" /mnt
 else
-    echo "formating ${DISK}1 as linux swap"
+    echo "creating partiton ${DISK}1 as linux swap"
+    sgdisk -n 1:0:+1024M ${DISK}
     mkswap "${DISK}1"
     swapon "${DISK}1"
 
-    echo "formating ${DISK}2 as ext4"
+    echo "creating partiton ${DISK}2 as ext4"
+    sgdisk -n 2:0:0 ${DISK}
     mkfs.ext4 "${DISK}2"
 
     echo "mounting ${DISK}2 at /mnt"

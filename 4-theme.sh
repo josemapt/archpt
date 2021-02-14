@@ -35,6 +35,15 @@ echo "changing plymouth theme"
 sudo mv plymouth/custom /usr/share/plymouth/themes
 sudo plymouth-set-default-theme -R custom
 
+if [[ ! -d /sys/firmware/efi ]]
+then
+    sudo sed -i 's/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/HOOKS=(base udev plymouth autodetect modconf block filesystems keyboard fsck)/' /etc/mkinitcpio.conf
+    sudo mkinitcpio -P
+
+    sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0"/' /etc/default/grub
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+fi
+
 #sudo mount /dev/nvme0n1p1 /boot/efi/;
 #sudo cp -f /boot/i* /boot/efi/;
 #sudo cp -f /boot/vmlinuz-linux /boot/efi/;
