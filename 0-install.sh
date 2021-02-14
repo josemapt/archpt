@@ -25,20 +25,10 @@ then
     mount $DISK /boot/efi
     
     bootctl install --path=/boot/efi
-    cat <<EOF > /boot/efi/loader/entries/loader.conf
-    default arch.conf
-    timeout 0
-    console-mode max
-    editor no
-    EOF
+    
+    echo -e "default arch.conf\ntimeout 0\nconsole-mode max\neditor no" > /boot/efi/loader/entries/loader.conf
 
-    cat <<EOF > /boot/efi/loader/entries/arch.conf
-    title Arch Linux  
-    linux /vmlinuz-linux  
-    initrd  /intel-ucode.img
-    initrd  /initramfs-linux.img  
-    options root=${DISK}p3 rw quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0
-    EOF
+    echo -e "title Arch Linux\nlinux /vmlinuz-linux\ninitrd  /intel-ucode.img\ninitrd  /initramfs-linux.img\noptions root=${DISK}p3 rw quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0"
 
     umount -R /boot/efi
 
