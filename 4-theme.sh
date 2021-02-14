@@ -26,5 +26,11 @@ gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgr
 echo "changing sound theme"
 gsettings set org.gnome.desktop.sound theme-name 'Yaru'
 
-echo "Adding icons to sidepanel"
+echo "adding icons to sidepanel"
 gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'VSCodium.desktop']"
+
+echo "changing default shell"
+sudo chsh -s /bin/fish josema
+
+
+echo "Installation finished"
