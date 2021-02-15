@@ -10,7 +10,7 @@ sudo sed -i '/^#NewsOnUpgrade/a BuildDir = \/tmp' /etc/paru.conf
 
 echo "==> Installing aur pakages..."
 
-paru -S --noconfirm <pakages_aur.txt
+paru -S --noconfirm $(<pakages_aur.txt)
 
 paru -S gdm-plymouth
 sudo systemctl enable gdm

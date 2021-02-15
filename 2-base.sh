@@ -1,4 +1,4 @@
 
 echo "==> Installing Base System..."
 
-sudo pacman -S --noconfirm --needed <pakages.txt
+sudo pacman -S --noconfirm --needed $(<pakages.txt)
