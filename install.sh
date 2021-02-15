@@ -22,9 +22,11 @@ read -p "Enter keyboard layout (us, es): " KEYBOARD
 
 read -p "Enter hostname: " HOSTNAME
 
-read -ps "Enter root password: " ROOTPASS
+read -sp "Enter root password: " ROOTPASS
+echo -e "\n"
 read -p "Enter user name: " USERNAME
-read -ps "Enter password for ${USERNAME}: " USERPASS
+read -sp "Enter password for ${USERNAME}: " USERPASS
+echo -e "\n"
 
 # disk ------------------------------------------------------------------------
 echo "==> Preparing disk for installation ..."
