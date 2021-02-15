@@ -5,7 +5,7 @@ chrootex () {
     arch-chroot /mnt bash -c "$@"
 }
 
-# Network checking ---------------------------------------------------------------
+# Network and mirrorlist ---------------------------------------------------------
 echo "==> Checking network connection..."
 if ping -c 1 google.com >/dev/null
 then
@@ -173,6 +173,9 @@ echo "==> Downloading last pakages and cloning repo"
 pacstrap /mnt git
 chrootex "git clone https://github.com/josemapt/archpt.git /home/${USERNAME}/archpt"
 chrootex "chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/archpt"
+
+echo "session optional pam_exec.so /bin/bash /home/${USERNAME}/archpt/postinstall.sh" >> /mnt/etc/pam.d/login
+
 
 umount -R /mnt
 
