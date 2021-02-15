@@ -137,8 +137,6 @@ then
 
     echo -e "title Arch Linux\nlinux /vmlinuz-linux\ninitrd  /intel-ucode.img\ninitrd  /initramfs-linux.img\noptions root=${DISK}p3 rw quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0" > /mnt/boot/efi/loader/entries/arch.conf
 
-    umount -R /mnt/boot/efi
-
 else
     pacstrap /mnt grub
     chrootex "grub-install --target=i386-pc ${DISK}"
