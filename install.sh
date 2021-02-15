@@ -11,13 +11,8 @@ else
     exit -1
 fi
 
-echo "==> Refreshing mirrorlist (spain)..."
-pacman -Sy --noconfirm wget
-wget -q -o /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4"
-wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4"
-wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4"
-
-sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
+echo "==> Refreshing mirrorlist..."
+reflector --download-timeot 0.5 -f 70 -p https -p http --save /etc/pacman.d/mirrorlist
 
 # variables -------------------------------------------------------------------
 [[ -d /sys/firmware/efi ]] && EFI=true
@@ -167,4 +162,3 @@ git clone https://github.com/josemapt/archpt.git /mnt/home/${USERNAME}/archpt
 chown -R ${USERNAME}:${USERNAME} /mnt/home/${USERNAME}/archpt
 
 echo "==> Installation finished. System ready for first boot."
-rm install.sh
