@@ -5,6 +5,9 @@ cd paru-bin && makepkg --noconfirm -sic
 cd ..
 rm -rf paru-bin
 
+echo "setting /tmp as build directory"
+sudo sed -i '/^#NewsOnUpgrade/a BuildDir = \/tmp' /etc/paru.conf
+
 echo "==> Installing aur pakages..."
 
 PKGS=(
