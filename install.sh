@@ -125,9 +125,9 @@ then
     umount -R /mnt/boot/efi
 
 else
-    pacman -S --noconfirm grub
-    grub-install --target=i386-pc $DISK
-    grub-mkconfig -o /boot/grub/grub.cfg
+    pacstrap /mnt grub
+    arch-chroot /mnt "grub-install --target=i386-pc ${DISK}"
+    arch-chroot /mnt "grub-mkconfig -o /boot/grub/grub.cfg"
 fi
 
 
