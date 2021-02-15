@@ -2,7 +2,7 @@
 
 # functions ---------------------------------------------------------------------
 chrootex () {
-    arch-chroot /mnt bash -e "$@"
+    arch-chroot /mnt bash -c $@
 }
 
 # Network checking ---------------------------------------------------------------
@@ -173,5 +173,7 @@ echo "==> Downloading last pakages and cloning repo"
 pacstrap /mnt git
 chrootex "git clone https://github.com/josemapt/archpt.git /home/${USERNAME}/archpt"
 chrootex "chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/archpt"
+
+umount -R /mnt
 
 echo "==> Installation finished. System ready for first boot."
