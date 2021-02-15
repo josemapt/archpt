@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Network and mirrorlist --------------------------------------------------------------
+# Network ------------------------------------------------------------------
 echo "==> Checking network connection..."
 if ping -c 1 google.com >/dev/null
 then
@@ -8,7 +8,7 @@ then
 else
     echo "Network not found"
     read -p "Enter wifi SSID: " SSID
-    read -ps "Enter password for $SSID: " PASS
+    read -sp "Enter password for $SSID: " PASS
     
     nmcli r wifi on
     nmcli d wifi connect $SSID password $PASS
@@ -22,13 +22,7 @@ else
     fi
 fi
 
-#echo "==> Refreshing mirrorlist..."
-#sudo wget -q -o /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4"
-#sudo wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4"
-#sudo wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4"
-#
-#sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
-
+# pacman config --------------------------------------------------------------------
 echo "adding color to pacman"
 sudo sed -i 's/#Color/Color/' /etc/pacman.conf
 

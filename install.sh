@@ -17,16 +17,23 @@ reflector --download-timeout 0.5 -f 70 -p https -p http --save /etc/pacman.d/mir
 # variables -------------------------------------------------------------------
 [[ -d /sys/firmware/efi ]] && EFI=true
 
-read -p "Enter disk name (/dev/sda, /dev/nvme0n1): " DISK
-read -p "Enter keyboard layout (us, es): " KEYBOARD
+#read -p "Enter disk name (/dev/sda, /dev/nvme0n1): " DISK
+DISK=/dev/vda
 
-read -p "Enter hostname: " HOSTNAME
+#read -p "Enter keyboard layout (us, es): " KEYBOARD
+KEYBOARD=es
+#read -p "Enter region (Europe, Asia): " REGION
+#read -p "Enter country (Madrid, Chicago): " COUNTRY
+REGION=Europe
+COUNTRY=madrid
+
+#read -p "Enter hostname: " HOSTNAME
+HOSTNAME=jm-arch
 
 read -sp "Enter root password: " ROOTPASS
-echo -e "\n"
-read -p "Enter user name: " USERNAME
+#read -p "Enter user name: " USERNAME
+USERNAME=josema
 read -sp "Enter password for ${USERNAME}: " USERPASS
-echo -e "\n"
 
 # disk ------------------------------------------------------------------------
 echo "==> Preparing disk for installation ..."
@@ -93,7 +100,15 @@ pacstrap /mnt base base-devel linux linux-firmware intel-ucode
 echo "generating fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
 
-# vconsole -----------------------------------------------------------------------------
+# Initial config -----------------------------------------------------------------------
+echo "==> Setting zoneinfo..."
+arch-chroot /mnt bash -c "ln -sf /usr/share/zoneinfo/${REGION}/${COUNTRY} /etc/localtime && hwclock --systohc"
+
+echo "==> Generating locales..."
+echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
+arch-chroot /mnt bash -c "locale-gen"
+
 echo "==> Creating vconsole..."
 echo "KEYMAP=${KEYBOARD}" > /mnt/etc/vconsole.conf
 
@@ -150,8 +165,8 @@ sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /mn
 
 # Finish installation --------------------------------------------------------------------
 echo "==> Downloading last pakages and cloning repo"
-pacman -Sy --noconfirm git
-git clone https://github.com/josemapt/archpt.git /mnt/home/${USERNAME}/archpt
-chown -R ${USERNAME}:${USERNAME} /mnt/home/${USERNAME}/archpt
+pacstrap /mnt git
+arch-chroot /mnt bash -c "git clone https://github.com/josemapt/archpt.git /home/${USERNAME}/archpt"
+arch-chroot /mnt bash -c "chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/archpt"
 
 echo "==> Installation finished. System ready for first boot."
