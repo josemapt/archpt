@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# functions ---------------------------------------------------------------------
+chrootex () {
+    arch-chroot /mnt bash -e $1
+}
+
 # Network checking ---------------------------------------------------------------
 echo "==> Checking network connection..."
 if ping -c 1 google.com >/dev/null
@@ -102,12 +107,12 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 # Initial config -----------------------------------------------------------------------
 echo "==> Setting zoneinfo..."
-arch-chroot /mnt bash -c "ln -sf /usr/share/zoneinfo/${REGION}/${COUNTRY} /etc/localtime && hwclock --systohc"
+chrootex "ln -sf /usr/share/zoneinfo/${REGION}/${COUNTRY} /etc/localtime && hwclock --systohc"
 
 echo "==> Generating locales..."
 echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
 echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
-arch-chroot /mnt bash -c "locale-gen"
+chrootex "locale-gen"
 
 echo "==> Creating vconsole..."
 echo "KEYMAP=${KEYBOARD}" > /mnt/etc/vconsole.conf
@@ -134,8 +139,8 @@ then
 
 else
     pacstrap /mnt grub
-    arch-chroot /mnt bash -c "grub-install --target=i386-pc ${DISK}"
-    arch-chroot /mnt bash -c "grub-mkconfig -o /boot/grub/grub.cfg"
+    chrootex "grub-install --target=i386-pc ${DISK}"
+    chrootex "grub-mkconfig -o /boot/grub/grub.cfg"
 fi
 
 
@@ -148,17 +153,17 @@ echo -e "\n127.0.0.1	localhost\n::1		localhost\n127.0.1.1	${HOSTNAME}.localdomai
 
 echo "installing networkmanager"
 pacstrap /mnt networkmanager
-arch-chroot /mnt bash -c "systemctl enable NetworkManager"
+chrootex "systemctl enable NetworkManager"
 
 # Adding user -----------------------------------------------------------------------------
 echo "==> Configuring users..."
 
-arch-chroot /mnt bash -c "echo -e '${ROOTPASS}\n${ROOTPASS}' | passwd root"
+chrootex "echo -e '${ROOTPASS}\n${ROOTPASS}' | passwd root"
 
-arch-chroot /mnt bash -c "useradd -m ${USERNAME}"
-arch-chroot /mnt bash -c "echo -e '${USERPASS}\n${USERPASS}' | passwd ${USERNAME}"
+chrootex "useradd -m ${USERNAME}"
+chrootex "echo -e '${USERPASS}\n${USERPASS}' | passwd ${USERNAME}"
 
-arch-chroot /mnt bash -c "usermod -aG wheel,audio,video,optical,storage ${USERNAME}"
+chrootex "usermod -aG wheel,audio,video,optical,storage ${USERNAME}"
 
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /mnt/etc/sudoers
 
@@ -166,7 +171,7 @@ sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /mn
 # Finish installation --------------------------------------------------------------------
 echo "==> Downloading last pakages and cloning repo"
 pacstrap /mnt git
-arch-chroot /mnt bash -c "git clone https://github.com/josemapt/archpt.git /home/${USERNAME}/archpt"
-arch-chroot /mnt bash -c "chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/archpt"
+chrootex "git clone https://github.com/josemapt/archpt.git /home/${USERNAME}/archpt"
+chrootex "chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/archpt"
 
 echo "==> Installation finished. System ready for first boot."
