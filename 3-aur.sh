@@ -5,9 +5,6 @@ cd paru-bin && makepkg --noconfirm -sic
 cd ..
 rm -rf paru-bin
 
-echo "==> Removing conflict depencencies..."
-sudo pacman -R libgdm
-
 echo "==> Installing aur pakages..."
 
 PKGS=(
@@ -22,12 +19,14 @@ PKGS=(
     
     # --- plymouth
         'plymouth'
-        'gdm-plymouth'
+        #'gdm-plymouth'
 )
 
 for PKG in "${PKGS[@]}"; do
     echo "INSTALLING: ${PKG}"
     paru -S --noconfirm "$PKG"
 done
+
+paru -S gdm-plymouth
 
 sudo systemctl enable gdm
