@@ -1,0 +1,5 @@
+brave-bin
+vscodium-bin
+yaru-sound-theme
+nerd-fonts-source-code-pro
+plymouth
