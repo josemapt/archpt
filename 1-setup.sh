@@ -23,14 +23,11 @@ else
 fi
 
 echo "==> Refreshing mirrorlist (spain)..."
-curl -s -o mirrorlist_spain https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4
-curl -s -o mirrorlist_germany https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4
-curl -s -o mirrorlist_france https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4
+sudo curl -s -o /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4
+sudo curl -s -a /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4
+sudo curl -s -a /etc/pacman.d/mirrorlist https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4
 
-sudo cat mirrorlist_spain mirrorlist_france mirrorlist_germany > /etc/pacman.d/mirrorlist
 sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
-
-rm mirrorlist_*
 
 echo "adding color to pacman"
 sudo sed -i 's/#Color/Color/' /etc/pacman.conf
