@@ -14,4 +14,4 @@ Then run:
 
 After rebooting you'll see that the home directory is not empty. Then cd into archpt and run:
 
-    make
+    ./postinstall.sh

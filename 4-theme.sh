@@ -67,8 +67,14 @@ echo "changing terminal theme"
 gsettings set org.gnome.Terminal.Legacy.Settings theme-variant 'dark'
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ font 'SauceCodePro Nerd Font 22'
 
-echo "changing default shell"
-sudo chsh -s /bin/fish josema # need change
-/bin/fish -c "set -U fish_greeting"
+echo "moving config files"
+mkdir -p ~/.cache/bash
 
-echo "Installation finished"
+mv -f ~/archpt/config/.bashrc ~
+mv -f ~/archpt/config/nvim ~/.config/
+mv -f ~/archpt/config/fish/* ~/.config/fish/
+mv -f ~/archpt/config/mimeapps.list ~/.config/
+
+echo "changing default shell"
+sudo chsh -s /bin/fish $(whoami)
+/bin/fish -c "set -U fish_greeting"

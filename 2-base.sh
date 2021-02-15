@@ -10,6 +10,7 @@ PKGS=(
         'unzip'
         'fish'
         'fd'
+        'exa'
         'ripgrep'
         'sd'
 
