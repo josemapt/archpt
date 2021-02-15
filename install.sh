@@ -177,3 +177,4 @@ chrootex "chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/archpt"
 umount -R /mnt
 
 echo "==> Installation finished. System ready for first boot."
+reboot
