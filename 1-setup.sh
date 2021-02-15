@@ -23,9 +23,9 @@ else
 fi
 
 echo "==> Refreshing mirrorlist (spain)..."
-sudo curl -s -o /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4"
-sudo curl -s -oa /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4"
-sudo curl -s -oa /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4"
+sudo wget -q -o /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4"
+sudo wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4"
+sudo wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4"
 
 sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 

@@ -11,7 +11,7 @@ else
 fi
 
 echo "==> Refreshing mirrorlist (spain)..."
-pacman -Sy wget
+pacman -Sy --noconfirm wget
 wget -q -o /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4"
 wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4"
 wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4"
