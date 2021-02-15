@@ -174,9 +174,6 @@ pacstrap /mnt git
 chrootex "git clone https://github.com/josemapt/archpt.git /home/${USERNAME}/archpt"
 chrootex "chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/archpt"
 
-echo "session optional pam_exec.so /bin/bash /home/${USERNAME}/archpt/postinstall.sh" >> /mnt/etc/pam.d/login
-
-
 umount -R /mnt
 
 echo "==> Installation finished. System ready for first boot."
