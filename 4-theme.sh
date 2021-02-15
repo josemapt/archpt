@@ -43,11 +43,6 @@ if [[ ! -d /sys/firmware/efi ]]
 then
     sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0"/' /etc/default/grub
     sudo grub-mkconfig -o /boot/grub/grub.cfg
-else
-    sudo mount /dev/nvme0n1p1 /boot/efi/;
-    sudo cp -f /boot/i* /boot/efi/;
-    sudo cp -f /boot/vmlinuz-linux /boot/efi/;
-    sudo umount -R /boot/efi;
 fi
 
 echo "changing <close> keybinding"
