@@ -47,7 +47,7 @@ else
     sudo mount /dev/nvme0n1p1 /boot/efi/;
     sudo cp -f /boot/i* /boot/efi/;
     sudo cp -f /boot/vmlinuz-linux /boot/efi/;
-    sudo sudo umount -R /boot/efi;
+    sudo umount -R /boot/efi;
 fi
 
 echo "changing <close> keybinding"
@@ -63,8 +63,11 @@ sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/qvidcap.desktop"
 sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/lstopo.desktop"
 sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/nm-connection-editor.desktop"
 
+echo "changing terminal default gtk-theme"
+gsettings set org.gnome.Terminal.Legacy.Settings theme-variant 'dark'
+
 echo "changing default shell"
-sudo chsh -s /bin/fish josema
+sudo chsh -s /bin/fish josema # need change
 
 
 echo "Installation finished"
