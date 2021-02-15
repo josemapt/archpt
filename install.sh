@@ -67,6 +67,10 @@ then
 
         echo "mounting ${DISK}p3 at /mnt"
         mount "${DISK}p3" /mnt
+
+        echo "mounting ${DISK}p1 at /mnt/boot"
+        mkdir /mnt/boot/
+        mount "${DISK}p1" /mnt/boot/
     else
         echo "creating partition ${DISK}1 as fat32"
         sgdisk -n 1:0:+550M ${DISK}
@@ -86,6 +90,10 @@ then
 
         echo "mounting ${DISK}3 at /mnt"
         mount "${DISK}3" /mnt
+
+        echo "mounting ${DISK}1 at /mnt/boot"
+        mkdir /mnt/boot/
+        mount "${DISK}1" /mnt/boot/
     fi
 else
     echo "creating partition ${DISK}1 as ext4"
@@ -122,18 +130,12 @@ echo "KEYMAP=${KEYBOARD}" > /mnt/etc/vconsole.conf
 echo "==> Installing bootloader..."
 
 if [[ $EFI ]]
-then
-    mkdir /mnt/boot/efi
-    mount $DISK /mnt/boot/efi
-    
-    bootctl install --path=/mnt/boot/efi
+then    
+    chrootex "bootctl install --path=/boot/"
     
     echo -e "default arch.conf\ntimeout 0\nconsole-mode max\neditor no" > /mnt/boot/efi/loader/loader.conf
 
     echo -e "title Arch Linux\nlinux /vmlinuz-linux\ninitrd  /intel-ucode.img\ninitrd  /initramfs-linux.img\noptions root=${DISK}p3 rw quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0" > /mnt/boot/efi/loader/entries/arch.conf
-
-    cp -f /mnt/boot/i* /mnt/boot/efi/;
-    cp -f /mnt/boot/vmlinuz-linux /mnt/boot/efi/;
 
     umount -R /mnt/boot/efi
 
