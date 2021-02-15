@@ -26,21 +26,8 @@ echo "==> Preparing disk for installation (mbr)..."
 echo -n "Enter disk name (/dev/sda, /dev/nvme0n1): "
 read DISK
 
-if [[ $DISK = *nvme* ]]
+if [[ ! -d /sys/firmware/efi ]]
 then
-    echo "formating ${DISK}p1 as fat32"
-    mkfs.fat -F32 "${DISK}p1"
-
-    echo "formating ${DISK}p2 as linux swap"
-    mkswap "${DISK}p2"
-    swapon "${DISK}p2"
-
-    echo "formating ${DISK}p3 as ext4"
-    mkfs.ext4 "${DISK}p3"
-
-    echo "mounting ${DISK}p3 at /mnt"
-    mount "${DISK}p3" /mnt
-else
     echo "creating partition ${DISK}1 as ext4"
     parted ${DISK} mklabel msdos
     parted ${DISK} mkpart primary 1MiB 100%
@@ -48,6 +35,49 @@ else
 
     echo "mounting ${DISK}1 at /mnt"
     mount "${DISK}1" /mnt
+else
+    sgdisk -g ${DISK}
+
+    if [[ $DISK = *nvme* ]]
+    then
+        echo "creating partition ${DISK}p1 as fat32"
+        sgdisk -n 1:0:+550M ${DISK}
+        sgdisk -t 1:ef00 ${DISK}
+        mkfs.fat32 "${DISK}p1"
+
+        echo "creating partition ${DISK}p2 as swap"
+        sgdisk -n 2:0:+1G ${DISK}
+        sgdisk -t 2:8200 ${DISK}
+        mkswap "${DISK}p2"
+        swapon "${DISK}p2"
+
+        echo "creating partition ${DISK}p3 as ext4"
+        sgdisk -n 3:0:0 ${DISK}
+        sgdisk -t 3:8300 ${DISK}
+        mkfs.ext4 "${DISK}p3"
+
+        echo "mounting ${DISK}p3 at /mnt"
+        mount "${DISK}p3" /mnt
+    else
+        echo "creating partition ${DISK}1 as fat32"
+        sgdisk -n 1:0:+550M ${DISK}
+        sgdisk -t 1:ef00 ${DISK}
+        mkfs.fat32 "${DISK}1"
+
+        echo "creating partition ${DISK}2 as swap"
+        sgdisk -n 2:0:+1G ${DISK}
+        sgdisk -t 2:8200 ${DISK}
+        mkswap "${DISK}2"
+        swapon "${DISK}2"
+
+        echo "creating partition ${DISK}3 as ext4"
+        sgdisk -n 3:0:0 ${DISK}
+        sgdisk -t 3:8300 ${DISK}
+        mkfs.ext4 "${DISK}3"
+
+        echo "mounting ${DISK}3 at /mnt"
+        mount "${DISK}3" /mnt
+    fi
 fi
 
 

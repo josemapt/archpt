@@ -35,20 +35,33 @@ echo "changing plymouth theme"
 sudo mv plymouth/custom /usr/share/plymouth/themes
 sudo plymouth-set-default-theme -R custom
 
+sudo sed -i 's/MODULES=()/MODULES=(i915)/' /etc/mkinitcpio.conf
+sudo sed -i 's/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/HOOKS=(base udev plymouth autodetect modconf block filesystems keyboard fsck)/' /etc/mkinitcpio.conf
+sudo mkinitcpio -P
+
 if [[ ! -d /sys/firmware/efi ]]
 then
-    sudo sed -i 's/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/HOOKS=(base udev plymouth autodetect modconf block filesystems keyboard fsck)/' /etc/mkinitcpio.conf
-    sudo mkinitcpio -P
-
     sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3 rd.udev.log_priority=3 vt.global_cursor_default=0"/' /etc/default/grub
     sudo grub-mkconfig -o /boot/grub/grub.cfg
+else
+    sudo mount /dev/nvme0n1p1 /boot/efi/;
+    sudo cp -f /boot/i* /boot/efi/;
+    sudo cp -f /boot/vmlinuz-linux /boot/efi/;
+    sudo sudo umount -R /boot/efi;
 fi
 
-#sudo mount /dev/nvme0n1p1 /boot/efi/;
-#sudo cp -f /boot/i* /boot/efi/;
-#sudo cp -f /boot/vmlinuz-linux /boot/efi/;
-#sudo sudo umount -R /boot/efi;
+echo "changing <close> keybinding"
+gsettings set org.gnome.desktop.wm.keybindings close "['<Super><Shift>q']"
 
+echo "removing innecesary desktop entries"
+sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/nvim.desktop"
+sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/bssh.desktop"
+sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/avahi-discover.desktop"
+sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/bvnc.desktop"
+sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/qv4l2.desktop"
+sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/qvidcap.desktop"
+sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/lstopo.desktop"
+sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/nm-connection-editor.desktop"
 
 echo "changing default shell"
 sudo chsh -s /bin/fish josema
