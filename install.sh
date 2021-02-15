@@ -93,15 +93,6 @@ pacstrap /mnt base base-devel linux linux-firmware intel-ucode
 echo "generating fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
 
-
-# Arch-chroot at /mnt -----------------------------------------------------------------
-#curl -o /mnt/install.sh https://raw.githubusercontent.com/josemapt/archpt/main/0-install.sh
-#chmod +x /mnt/install.sh
-#sed -i "s|DISK=|DISK=${DISK}|g" /mnt/install.sh
-
-#echo "Arch-chroot at /mnt"
-#arch-chroot /mnt
-
 # vconsole -----------------------------------------------------------------------------
 echo "==> Creating vconsole..."
 echo "KEYMAP=${KEYBOARD}" > /mnt/etc/vconsole.conf
@@ -128,8 +119,8 @@ then
 
 else
     pacstrap /mnt grub
-    arch-chroot /mnt "grub-install --target=i386-pc ${DISK}"
-    arch-chroot /mnt "grub-mkconfig -o /boot/grub/grub.cfg"
+    arch-chroot /mnt bash -c "grub-install --target=i386-pc ${DISK}"
+    arch-chroot /mnt bash -c "grub-mkconfig -o /boot/grub/grub.cfg"
 fi
 
 
@@ -142,17 +133,17 @@ echo -e "\n127.0.0.1	localhost\n::1		localhost\n127.0.1.1	${HOSTNAME}.localdomai
 
 echo "installing networkmanager"
 pacstrap /mnt networkmanager
-arch-chroot /mnt "systemctl enable NetworkManager"
+arch-chroot /mnt bash -c "systemctl enable NetworkManager"
 
 # Adding user -----------------------------------------------------------------------------
 echo "==> Configuring users..."
 
-arch-chroot /mnt "echo -e '${ROOTPASS}\n${ROOTPASS}' | passwd root"
+arch-chroot /mnt bash -c "echo -e '${ROOTPASS}\n${ROOTPASS}' | passwd root"
 
-arch-chroot /mnt "useradd -m ${USERNAME}"
-arch-chroot /mnt "echo -e '${USERPASS}\n${USERPASS}' | passwd ${USERNAME}"
+arch-chroot /mnt bash -c "useradd -m ${USERNAME}"
+arch-chroot /mnt bash -c "echo -e '${USERPASS}\n${USERPASS}' | passwd ${USERNAME}"
 
-arch-chroot /mnt "usermod -aG wheel,audio,video,optical,storage ${USERNAME}"
+arch-chroot /mnt bash -c "usermod -aG wheel,audio,video,optical,storage ${USERNAME}"
 
 sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /mnt/etc/sudoers
 
