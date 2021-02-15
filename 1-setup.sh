@@ -22,12 +22,12 @@ else
     fi
 fi
 
-echo "==> Refreshing mirrorlist (spain)..."
-sudo wget -q -o /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4"
-sudo wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4"
-sudo wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4"
-
-sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
+#echo "==> Refreshing mirrorlist..."
+#sudo wget -q -o /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=ES&protocol=http&protocol=https&ip_version=4"
+#sudo wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=DE&protocol=http&protocol=https&ip_version=4"
+#sudo wget -q -a /etc/pacman.d/mirrorlist "https://archlinux.org/mirrorlist/?country=FR&protocol=http&protocol=https&ip_version=4"
+#
+#sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist
 
 echo "adding color to pacman"
 sudo sed -i 's/#Color/Color/' /etc/pacman.conf

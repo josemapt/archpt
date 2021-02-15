@@ -12,7 +12,7 @@ else
 fi
 
 echo "==> Refreshing mirrorlist..."
-reflector --download-timeot 0.5 -f 70 -p https -p http --save /etc/pacman.d/mirrorlist
+reflector --download-timeout 0.5 -f 70 -p https -p http --save /etc/pacman.d/mirrorlist 2>/dev/null
 
 # variables -------------------------------------------------------------------
 [[ -d /sys/firmware/efi ]] && EFI=true
@@ -22,9 +22,9 @@ read -p "Enter keyboard layout (us, es): " KEYBOARD
 
 read -p "Enter hostname: " HOSTNAME
 
-read -p "Enter root password: " ROOTPASS
+read -ps "Enter root password: " ROOTPASS
 read -p "Enter user name: " USERNAME
-read -p "Enter $USERNAME password: " USERPASS
+read -ps "Enter password for ${USERNAME}: " USERPASS
 
 # disk ------------------------------------------------------------------------
 echo "==> Preparing disk for installation ..."
