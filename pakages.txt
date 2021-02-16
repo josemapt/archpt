@@ -2,6 +2,7 @@ xf86-video-intel
 nvidia
 neovim
 unzip
+xdg-utils
 fish
 fd
 exa

@@ -21,9 +21,10 @@ sudo mv usr/share/themes/Matcha-* /usr/share/themes/
 gsettings set org.gnome.desktop.interface gtk-theme 'Matcha-sea'
 
 echo "changing background image"
-sudo mkdir /usr/share/backgrounds
-sudo mv assets/wall1.jpg /usr/share/backgrounds
-gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/wall1.jpg'
+sudo mkdir /usr/share/images
+sudo cp ~/archpt/plymouth/custom/logo.png /usr/share/images # logo for gdm
+sudo mv assets/wall1.jpg /usr/share/images
+gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/images/wall1.jpg'
 
 echo "changing sound theme"
 gsettings set org.gnome.desktop.sound theme-name 'Yaru'
@@ -61,6 +62,14 @@ sudo bash -c "echo 'NoDisplay=true'  >> /usr/share/applications/nm-connection-ed
 echo "changing terminal theme"
 gsettings set org.gnome.Terminal.Legacy.Settings theme-variant 'dark'
 gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ font 'SauceCodePro Nerd Font 22'
+
+echo  "changing gdm theme"
+sudo machinectl shell gdm@ /bin/bash -c "gsettings set org.gnome.desktop.interface cursor-theme 'Breeze'"
+sudo machinectl shell gdm@ /bin/bash -c "gsettings set org.gnome.desktop.interface icon-theme 'Papirus'"
+sudo machinectl shell gdm@ /bin/bash -c "gsettings set org.gnome.desktop.interface gtk-theme 'Matcha-sea'"
+sudo machinectl shell gdm@ /bin/bash -c "gsettings set org.gnome.login-screen logo '/usr/share/images/logo.png'"
+sudo machinectl shell gdm@ /bin/bash -c "gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click 'true'"
+sudo machinectl shell gdm@ /bin/bash -c "gsettings set org.gnome.desktop.interface toolkit-accessibility 'false'"
 
 echo "moving config files"
 mkdir -p ~/.cache/bash
