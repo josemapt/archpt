@@ -12,7 +12,6 @@ gnome-shell
 gnome-terminal
 gnome-control-center
 gnome-tweaks
-gdm
 nautilus
 evince
 totem
