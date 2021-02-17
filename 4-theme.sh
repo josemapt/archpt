@@ -1,8 +1,9 @@
 
 echo "==> Starting theme configuration..."
 
-echo "changing keymap"
+echo "changing keymap and enabling tap-to-click"
 gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'es')]"
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click 'true'
 
 echo "changing cursor theme"
 tar -xf assets/165371-Breeze.tar.gz

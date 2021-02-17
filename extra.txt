@@ -1,0 +1,8 @@
+xdg-utils
+xcb-util-cursor
+alsa-firmware
+bc
+fd
+exa
+ripgrep
+sd

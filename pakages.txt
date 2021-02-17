@@ -2,12 +2,8 @@ xf86-video-intel
 nvidia
 neovim
 unzip
-xdg-utils
 fish
-fd
-exa
-ripgrep
-sd
+man-db
 gnome-shell
 gnome-terminal
 gnome-control-center
