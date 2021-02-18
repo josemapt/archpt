@@ -89,7 +89,7 @@ then
 
         echo "mounting ${DISK}1 at /mnt/boot"
         mkdir /mnt/boot/
-        mount "${DISK}1" /mnt/boot/
+        mount "${DISK}3" /mnt/boot/
     fi
 else
     echo "creating partition ${DISK}1 as ext4"
