@@ -49,7 +49,7 @@ then
         echo "creating partition ${DISK}p1 as fat32"
         sgdisk -n 1:0:+550M ${DISK}
         sgdisk -t 1:ef00 ${DISK}
-        mkfs.fat32 "${DISK}p1"
+        mkfs.fat -F32 "${DISK}p1"
 
         echo "creating partition ${DISK}p2 as swap"
         sgdisk -n 2:0:+1G ${DISK}
@@ -59,7 +59,6 @@ then
 
         echo "creating partition ${DISK}p3 as ext4"
         sgdisk -n 3:0:0 ${DISK}
-        sgdisk -t 3:8300 ${DISK}
         mkfs.ext4 "${DISK}p3"
 
         echo "mounting ${DISK}p3 at /mnt"
@@ -72,7 +71,7 @@ then
         echo "creating partition ${DISK}1 as fat32"
         sgdisk -n 1:0:+100M ${DISK}
         sgdisk -t 1:ef00 ${DISK}
-        mkfs.fat32 "${DISK}1"
+        mkfs.fat -F32 "${DISK}1"
 
         echo "creating partition ${DISK}2 as swap"
         sgdisk -n 2:0:+900M ${DISK}
