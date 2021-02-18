@@ -22,22 +22,17 @@ reflector --download-timeout 0.5 -f 70 -p https -p http --save /etc/pacman.d/mir
 # variables -------------------------------------------------------------------
 [[ -d /sys/firmware/efi ]] && EFI=true
 
-#read -p "Enter disk name (/dev/sda, /dev/nvme0n1): " DISK
-DISK=/dev/vda
+read -p "Enter disk name (/dev/sda, /dev/nvme0n1): " DISK
 
-#read -p "Enter keyboard layout (us, es): " KEYBOARD
-KEYBOARD=es
-#read -p "Enter region (Europe, Asia): " REGION
-#read -p "Enter country (Madrid, Chicago): " COUNTRY
-REGION=Europe
-COUNTRY=madrid
+read -p "Enter keyboard layout (us, es): " KEYBOARD
 
-#read -p "Enter hostname: " HOSTNAME
-HOSTNAME=jm-arch
+read -p "Enter region (Europe, Asia): " REGION
+read -p "Enter country (Madrid, Chicago): " COUNTRY
+
+read -p "Enter hostname: " HOSTNAME
 
 read -sp "Enter root password: " ROOTPASS
-#read -p "Enter user name: " USERNAME
-USERNAME=josema
+read -p "Enter user name: " USERNAME
 read -sp "Enter password for ${USERNAME}: " USERPASS
 
 # disk ------------------------------------------------------------------------
