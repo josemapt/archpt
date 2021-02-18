@@ -32,8 +32,10 @@ read -p "Enter country (Madrid, Chicago): " COUNTRY
 read -p "Enter hostname: " HOSTNAME
 
 read -sp "Enter root password: " ROOTPASS
+echo -en "\n"
 read -p "Enter user name: " USERNAME
 read -sp "Enter password for ${USERNAME}: " USERPASS
+echo -en "\n"
 
 # disk ------------------------------------------------------------------------
 echo "==> Preparing disk for installation ..."
@@ -68,19 +70,18 @@ then
         mount "${DISK}p1" /mnt/boot/
     else
         echo "creating partition ${DISK}1 as fat32"
-        sgdisk -n 1:0:+550M ${DISK}
+        sgdisk -n 1:0:+100M ${DISK}
         sgdisk -t 1:ef00 ${DISK}
         mkfs.fat32 "${DISK}1"
 
         echo "creating partition ${DISK}2 as swap"
-        sgdisk -n 2:0:+1G ${DISK}
+        sgdisk -n 2:0:+900M ${DISK}
         sgdisk -t 2:8200 ${DISK}
         mkswap "${DISK}2"
         swapon "${DISK}2"
 
         echo "creating partition ${DISK}3 as ext4"
         sgdisk -n 3:0:0 ${DISK}
-        sgdisk -t 3:8300 ${DISK}
         mkfs.ext4 "${DISK}3"
 
         echo "mounting ${DISK}3 at /mnt"
