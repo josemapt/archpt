@@ -42,8 +42,7 @@ echo "==> Preparing disk for installation ..."
 
 if [[ $EFI ]]
 then
-    sgdisk -Z ${DISK} # zap all on disk
-    sgdisk -a 2048 -o ${DISK} # new gpt disk 2048 alignment
+    sgdisk $DISK
 
     if [[ $DISK = *nvme* ]]
     then
@@ -53,13 +52,14 @@ then
         mkfs.fat -F32 "${DISK}p1"
 
         echo "creating partition ${DISK}p2 as swap"
-        sgdisk -n 2:0:+1G ${DISK}
+        sgdisk -n 2:0:+2G ${DISK}
         sgdisk -t 2:8200 ${DISK}
         mkswap "${DISK}p2"
         swapon "${DISK}p2"
 
         echo "creating partition ${DISK}p3 as ext4"
         sgdisk -n 3:0:0 ${DISK}
+        sgdisk -t 3:8304 ${DISK}
         mkfs.ext4 "${DISK}p3"
 
         echo "mounting ${DISK}p3 at /mnt"
@@ -95,7 +95,7 @@ else
     echo "creating partition ${DISK}1 as ext4"
     parted ${DISK} mklabel msdos
     parted ${DISK} mkpart primary 1MiB 100%
-    mkfs.ext4 ${DISK}1
+    mkfs.ext4 "${DISK}1"
 
     echo "mounting ${DISK}1 at /mnt"
     mount "${DISK}1" /mnt
