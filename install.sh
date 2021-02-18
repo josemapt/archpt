@@ -44,7 +44,6 @@ if [[ $EFI ]]
 then
     sgdisk -Z ${DISK} # zap all on disk
     sgdisk -a 2048 -o ${DISK} # new gpt disk 2048 alignment
-    sgdisk -g ${DISK}
 
     if [[ $DISK = *nvme* ]]
     then
