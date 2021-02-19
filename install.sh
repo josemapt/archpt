@@ -59,7 +59,6 @@ then
 
         echo "creating partition ${DISK}p3 as ext4"
         sgdisk -n 3:0:0 ${DISK}
-        sgdisk -t 3:8304 ${DISK}
         mkfs.ext4 "${DISK}p3"
 
         echo "mounting ${DISK}p3 at /mnt"
@@ -89,7 +88,7 @@ then
 
         echo "mounting ${DISK}1 at /mnt/boot"
         mkdir /mnt/boot/
-        mount "${DISK}3" /mnt/boot/
+        mount "${DISK}1" /mnt/boot/
     fi
 else
     echo "creating partition ${DISK}1 as ext4"
