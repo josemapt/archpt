@@ -27,13 +27,13 @@ paru -S --noconfirm brave-bin vscodium-bin nerd-fonts-source-code-pro
 
 if [[ $VBOX ]]
 then
-    sudo pacman -S --noconfirm lightdm
-    paru -S --noconfirm lightdm-mini-greeter
-    
-    sudo sed -i "s/^#greeter-session=/greeter-session=lightdm-mini-greeter/" /etc/lightdm/lightdm.conf
-    sudo sed -i "s/CHANGE_ME/$(whoami)/" /etc/lightdm/lightdm-mini-greeter.conf
-    
-    sudo systemctl enable lightdm
+    #sudo pacman -S --noconfirm lightdm
+    #paru -S --noconfirm lightdm-mini-greeter
+    #
+    #sudo sed -i "s/^#greeter-session=/greeter-session=lightdm-mini-greeter/" /etc/lightdm/lightdm.conf
+    #sudo sed -i "s/CHANGE_ME/$(whoami)/" /etc/lightdm/lightdm-mini-greeter.conf
+    #
+    #sudo systemctl enable lightdm
 else
     paru -S plymouth pamac-aur yaru-sound-theme gdm-plymouth
     sudo systemctl enable gdm
