@@ -16,8 +16,8 @@ else
     exit -1
 fi
 
-echo "==> Refreshing mirrorlist..."
-reflector --download-timeout 0.5 -f 70 -p https -p http --save /etc/pacman.d/mirrorlist 2>/dev/null
+#echo "==> Refreshing mirrorlist..."
+#reflector --download-timeout 0.5 -f 70 -p https -p http --save /etc/pacman.d/mirrorlist 2>/dev/null
 
 # variables -------------------------------------------------------------------
 [[ -d /sys/firmware/efi ]] && EFI=true
@@ -42,23 +42,23 @@ echo "==> Preparing disk for installation ..."
 
 if [[ $EFI ]]
 then
-    sgdisk $DISK
+    #sgdisk $DISK
 
     if [[ $DISK = *nvme* ]]
     then
         echo "creating partition ${DISK}p1 as fat32"
-        sgdisk -n 1:0:+550M ${DISK}
-        sgdisk -t 1:ef00 ${DISK}
+        #sgdisk -n 1:0:+550M ${DISK}
+        #sgdisk -t 1:ef00 ${DISK}
         mkfs.fat -F32 "${DISK}p1"
 
         echo "creating partition ${DISK}p2 as swap"
-        sgdisk -n 2:0:+2G ${DISK}
-        sgdisk -t 2:8200 ${DISK}
+        #sgdisk -n 2:0:+2G ${DISK}
+        #sgdisk -t 2:8200 ${DISK}
         mkswap "${DISK}p2"
         swapon "${DISK}p2"
 
         echo "creating partition ${DISK}p3 as ext4"
-        sgdisk -n 3:0:0 ${DISK}
+        #sgdisk -n 3:0:0 ${DISK}
         mkfs.ext4 "${DISK}p3"
 
         echo "mounting ${DISK}p3 at /mnt"
@@ -69,18 +69,18 @@ then
         mount "${DISK}p1" /mnt/boot/
     else
         echo "creating partition ${DISK}1 as fat32"
-        sgdisk -n 1:0:+100M ${DISK}
-        sgdisk -t 1:ef00 ${DISK}
+        #sgdisk -n 1:0:+100M ${DISK}
+        #sgdisk -t 1:ef00 ${DISK}
         mkfs.fat -F32 "${DISK}1"
 
         echo "creating partition ${DISK}2 as swap"
-        sgdisk -n 2:0:+900M ${DISK}
-        sgdisk -t 2:8200 ${DISK}
+        #sgdisk -n 2:0:+900M ${DISK}
+        #sgdisk -t 2:8200 ${DISK}
         mkswap "${DISK}2"
         swapon "${DISK}2"
 
         echo "creating partition ${DISK}3 as ext4"
-        sgdisk -n 3:0:0 ${DISK}
+        #sgdisk -n 3:0:0 ${DISK}
         mkfs.ext4 "${DISK}3"
 
         echo "mounting ${DISK}3 at /mnt"
@@ -91,13 +91,17 @@ then
         mount "${DISK}1" /mnt/boot/
     fi
 else
-    echo "creating partition ${DISK}1 as ext4"
-    parted ${DISK} mklabel msdos
-    parted ${DISK} mkpart primary 1MiB 100%
-    mkfs.ext4 "${DISK}1"
+    echo "creating partition ${DISK}1 as swap"
+    mkswap "${DISK}1"
+    swapon "${DISK}1"
 
-    echo "mounting ${DISK}1 at /mnt"
-    mount "${DISK}1" /mnt
+    echo "creating partition ${DISK}2 as ext4"
+    #parted ${DISK} mklabel msdos
+    #parted ${DISK} mkpart primary 1MiB 100%
+    mkfs.ext4 "${DISK}2"
+
+    echo "mounting ${DISK}2 at /mnt"
+    mount "${DISK}2" /mnt
 fi
 
 

@@ -9,6 +9,7 @@ else
     echo "Network not found"
     read -p "Enter wifi SSID: " SSID
     read -sp "Enter password for $SSID: " PASS
+    echo -en "\n"
     
     nmcli r wifi on
     nmcli d wifi connect $SSID password $PASS
@@ -21,6 +22,10 @@ else
         exit -1
     fi
 fi
+
+# Variables --------------------------------------------------------------
+
+[[ `sudo dmesg | grep "Hypervisor detected"` ]] && VBOX=true
 
 # pacman config --------------------------------------------------------------------
 echo "adding color to pacman"
