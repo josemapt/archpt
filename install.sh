@@ -168,10 +168,10 @@ sed -i 's/^# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/' /mn
 
 
 # Finish installation --------------------------------------------------------------------
-echo "==> Downloading last pakages and cloning repo"
-pacstrap /mnt git
-chrootex "git clone https://github.com/josemapt/archpt.git /home/${USERNAME}/archpt"
-chrootex "chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/archpt"
+#echo "==> Downloading last pakages and cloning repo"
+#pacstrap /mnt git
+#chrootex "git clone https://github.com/josemapt/archpt.git /home/${USERNAME}/archpt"
+#chrootex "chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/archpt"
 
 umount -R /mnt
 
